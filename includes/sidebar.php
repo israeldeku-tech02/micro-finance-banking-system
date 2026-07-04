@@ -25,10 +25,10 @@ $current = basename($_SERVER['PHP_SELF']);
             Dashboard
         </a>
 
-        <a class="<?=($current=="profile.php")?'active':'';?>" href="profile.php">
+        <!--<a class="<?=($current=="profile.php")?'active':'';?>" href="profile.php">
             <i class="far fa-user"></i>
             Profile
-        </a>
+        </a> -->
 
 
         <small class="menu-title">
