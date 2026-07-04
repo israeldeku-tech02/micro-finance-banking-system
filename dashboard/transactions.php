@@ -182,27 +182,554 @@ require_once __DIR__ . '/../includes/footer.php';
 </div>
 
 <style>
-/* Styles */
-.table { width:100%; border-collapse: collapse; font-size:14px; }
-.table th, .table td { border:1px solid #ddd; padding:10px; text-align:left; }
-.table th { background:#f9f9f9; font-weight:600; }
-.btn { padding:6px 10px; margin:2px; border:none; cursor:pointer; border-radius:6px; font-size:14px; }
-.btn-primary { background:#2980b9; color:#fff; } .btn-success { background:#27ae60; color:#fff; } .btn-secondary { background:#aaa; color:#fff; }
-.top-controls { display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom:20px; }
-.top-controls input { padding:10px; width:40%; border:1px solid #ccc; border-radius:6px; font-size:14px; }
-.summary-cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:12px; margin:10px 0 16px 0; }
-.summary-cards .card { background:#fff; border:1px solid #eee; border-radius:10px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
-.card-title { font-size:12px; color:#666; margin-bottom:6px; text-transform:uppercase; letter-spacing:.3px; }
-.card-value { font-size:18px; font-weight:700; }
-.modal { display:none; position:fixed; inset:0; z-index:1000; background: rgba(0,0,0,0.25); }
-.modal-content { background:#fff; padding:20px; margin:60px auto; position:relative; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-.modal .close { position:absolute; top:20px; right:14px; font-size:20px; cursor:pointer; }
-.form-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
-.form-grid .full { grid-column: 1 / -1; }
-.field label { display:block; margin-bottom:6px; font-weight:600; font-size:14px; color:#333; }
-.field input, .field textarea, .field select { width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:14px; }
-.radio-row { display:flex; gap:16px; align-items:center; }
-.form-actions { margin-top:14px; }
+
+/*=====================================================
+    TABLE
+=====================================================*/
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(15,23,42,.05);
+    font-size:14px;
+}
+
+.table th{
+
+    background:#f8fafc;
+
+    color:#475569;
+
+    text-transform:uppercase;
+
+    letter-spacing:.4px;
+
+    font-size:13px;
+
+    padding:16px;
+
+    font-weight:700;
+
+    border-bottom:1px solid #e2e8f0;
+}
+
+.table td{
+
+    padding:15px;
+
+    border-bottom:1px solid #edf2f7;
+}
+
+.table tbody tr{
+
+    transition:.2s;
+}
+
+.table tbody tr:hover{
+
+    background:#f8fbff;
+}
+
+/*=====================================================
+    BUTTONS
+=====================================================*/
+
+.btn{
+
+    padding:11px 18px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:.25s;
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 20px rgba(0,0,0,.12);
+}
+
+.btn-primary{
+
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+
+    color:white;
+}
+
+.btn-success{
+
+    background:linear-gradient(135deg,#16a34a,#15803d);
+
+    color:white;
+}
+
+.btn-secondary{
+
+    background:#64748b;
+
+    color:white;
+}
+
+/*=====================================================
+    TOP CONTROLS
+=====================================================*/
+
+.top-controls{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.top-controls input{
+
+    width:380px;
+
+    padding:12px 16px;
+
+    border:1px solid #dbe3ee;
+
+    border-radius:12px;
+
+    background:#fff;
+
+    transition:.25s;
+
+    font-size:14px;
+}
+
+.top-controls input:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+/*=====================================================
+    SUMMARY CARDS
+=====================================================*/
+
+.summary-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+    margin-bottom:25px;
+}
+
+.summary-cards .card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:linear-gradient(145deg,#ffffff,#f8fbff);
+
+    border:1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 12px 30px rgba(15,23,42,.06);
+
+    transition:.3s;
+}
+
+.summary-cards .card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 18px 35px rgba(37,99,235,.12);
+}
+
+.summary-cards .card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:5px;
+
+    height:100%;
+
+    background:#2563eb;
+}
+
+.card-title{
+
+    font-size:12px;
+
+    color:#64748b;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+    margin-bottom:10px;
+}
+
+.card-value{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#1e293b;
+}
+
+/*=====================================================
+    MODAL
+=====================================================*/
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(6px);
+
+    z-index:9999;
+
+    animation:fadeIn .25s ease;
+}
+.modal-content::before{
+    content:"";
+    display:block;
+    height:6px;
+    margin:-30px -30px 24px;
+    border-radius:22px 22px 0 0;
+    background:linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6,
+        #60a5fa
+    );
+}
+.modal-content{
+
+    position:relative;
+
+    width:min(900px,92vw);
+
+    margin:35px auto;
+
+    max-height:92vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    box-shadow:
+
+        0 30px 70px rgba(15,23,42,.18),
+
+        0 10px 25px rgba(15,23,42,.08);
+
+    animation:pop .3s ease;
+}
+
+.modal-content h2,
+.modal-content h3{
+
+    margin:0;
+
+    padding-bottom:18px;
+
+    border-bottom:1px solid #edf2f7;
+
+    color:#1e3a8a;
+
+    font-size:28px;
+}
+
+.modal .close{
+
+    position:absolute;
+
+    right:22px;
+
+    top:20px;
+
+    width:40px;
+
+    height:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    color:#64748b;
+
+    transition:.25s;
+}
+
+.modal .close:hover{
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    transform:rotate(90deg);
+}
+
+/*=====================================================
+    FORM
+=====================================================*/
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+
+    gap:20px;
+
+    margin-top:25px;
+}
+
+.form-grid .full{
+
+    grid-column:1/-1;
+}
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.field label{
+
+    margin-bottom:8px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#475569;
+}
+
+.field input,
+.field textarea,
+.field select{
+
+    width:100%;
+
+    padding:13px 15px;
+
+    border:1px solid #dbe3ee;
+
+    border-radius:12px;
+
+    background:#fcfdff;
+
+    font-size:14px;
+
+    transition:.25s;
+}
+
+.field textarea{
+
+    min-height:110px;
+
+    resize:vertical;
+}
+
+.field input:hover,
+.field textarea:hover,
+.field select:hover{
+
+    border-color:#93c5fd;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+    background:white;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+
+/*=====================================================
+    RADIO
+=====================================================*/
+
+.radio-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:12px;
+
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:12px;
+}
+
+/*=====================================================
+    FORM FOOTER
+=====================================================*/
+
+.form-actions{
+
+    margin-top:28px;
+
+    padding-top:20px;
+
+    border-top:1px solid #e5e7eb;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+}
+
+/*=====================================================
+    SCROLLBAR
+=====================================================*/
+
+.modal-content::-webkit-scrollbar{
+
+    width:10px;
+}
+
+.modal-content::-webkit-scrollbar-track{
+
+    background:#f1f5f9;
+}
+
+.modal-content::-webkit-scrollbar-thumb{
+
+    background:#94a3b8;
+
+    border-radius:20px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover{
+
+    background:#64748b;
+}
+
+/*=====================================================
+    ANIMATION
+=====================================================*/
+
+@keyframes pop{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px) scale(.97);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+    }
+
+    to{
+
+        opacity:1;
+    }
+}
+
+/*=====================================================
+    RESPONSIVE
+=====================================================*/
+
+@media(max-width:900px){
+
+    .top-controls{
+
+        flex-direction:column;
+
+        align-items:stretch;
+    }
+
+    .top-controls input{
+
+        width:100%;
+    }
+
+    .form-grid{
+
+        grid-template-columns:1fr;
+    }
+
+    .modal-content{
+
+        width:95vw;
+
+        padding:22px;
+    }
+}
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
