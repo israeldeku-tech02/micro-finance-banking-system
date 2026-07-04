@@ -169,27 +169,292 @@ require_once __DIR__ . '/../includes/footer.php';
 </div>
 
 <style>
-/* Same styles as before */
-.table { width:100%; border-collapse: collapse; font-size:14px; }
-.table th, .table td { border:1px solid #ddd; padding:10px; text-align:left; }
-.table th { background:#f9f9f9; font-weight:600; }
-.btn { padding:6px 10px; margin:2px; border:none; cursor:pointer; border-radius:6px; font-size:14px; }
-.btn-primary { background:#2980b9; color:#fff; } .btn-success { background:#27ae60; color:#fff; }
-.top-controls { display:flex; gap:10px; align-items:center; justify-content:space-between; margin-bottom:20px; }
-.top-controls input { padding:10px; width:40%; border:1px solid #ccc; border-radius:6px; font-size:14px; }
-.summary-cards { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:12px; margin:10px 0 16px 0; }
-.summary-cards .card { background:#fff; border:1px solid #eee; border-radius:10px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
-.card-title { font-size:12px; color:#666; margin-bottom:6px; text-transform:uppercase; letter-spacing:.3px; }
-.card-value { font-size:18px; font-weight:700; }
-.modal { display:none; position:fixed; inset:0; z-index:1000; background: rgba(0,0,0,0.25); }
-.modal-content { background:#fff; padding:20px; margin:60px auto; position:relative; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.2);}
-.modal .close { position:absolute; top:20px; right:14px; font-size:20px; cursor:pointer; }
-.form-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:14px; }
-.form-grid .full { grid-column: 1 / -1; }
-.field label { display:block; margin-bottom:6px; font-weight:600; font-size:14px; color:#333; }
-.field input, .field textarea, .field select { width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-size:14px; }
-.radio-row { display:flex; gap:16px; align-items:center; }
-.form-actions { margin-top:14px; }
+/* =========================
+   GLOBAL THEME RESET
+========================= */
+:root{
+    --primary:#2563eb;
+    --success:#16a34a;
+    --danger:#ef4444;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --shadow:0 10px 25px rgba(0,0,0,0.06);
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* =========================
+   TOP CONTROLS
+========================= */
+.top-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.top-controls input{
+    width:42%;
+    padding:11px 14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#fff;
+    outline:none;
+    transition:0.2s;
+    font-size:14px;
+}
+
+.top-controls input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(37,99,235,0.1);
+}
+
+/* =========================
+   VIEW TABS
+========================= */
+.btn-tab{
+    background:#fff;
+    border:1px solid var(--border);
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:500;
+    color:var(--muted);
+    transition:0.2s;
+}
+
+.btn-tab:hover{
+    border-color:var(--primary);
+    color:var(--primary);
+}
+
+.btn-tab.active{
+    background:var(--primary);
+    color:#fff;
+    border-color:var(--primary);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn{
+    padding:10px 14px;
+    border:none;
+    cursor:pointer;
+    border-radius:12px;
+    font-size:14px;
+    font-weight:500;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:0.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
+    opacity:0.95;
+}
+
+.btn-primary{ background:var(--primary); color:#fff; }
+.btn-success{ background:var(--success); color:#fff; }
+.btn-danger{ background:var(--danger); color:#fff; }
+
+/* =========================
+   TABLE DESIGN (MODERN)
+========================= */
+.table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    font-size:14px;
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.table thead{
+    background:#f9fafb;
+}
+
+.table th{
+    text-align:left;
+    padding:14px;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--muted);
+    border-bottom:1px solid var(--border);
+}
+
+.table td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    color:var(--text);
+}
+
+.table tbody tr{
+    transition:0.2s;
+}
+
+.table tbody tr:hover{
+    background:#f3f6ff;
+}
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+.summary-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:14px;
+    margin:14px 0 18px;
+}
+
+.summary-cards .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:var(--shadow);
+    transition:0.2s;
+}
+
+.summary-cards .card:hover{
+    transform:translateY(-2px);
+}
+
+.card-title{
+    font-size:11px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    margin-bottom:6px;
+}
+
+.card-value{
+    font-size:20px;
+    font-weight:700;
+}
+
+/* =========================
+   MODAL (CLEAN & CENTERED)
+========================= */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(17,24,39,0.6);
+    backdrop-filter: blur(4px);
+    z-index:1000;
+}
+
+.modal-content{
+    background:#fff;
+    width:92%;
+    max-width:650px;
+    margin:70px auto;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+    animation:modalPop 0.25s ease;
+}
+
+@keyframes modalPop{
+    from{ transform:scale(0.95); opacity:0; }
+    to{ transform:scale(1); opacity:1; }
+}
+
+.modal .close{
+    position:absolute;
+    top:14px;
+    right:16px;
+    font-size:22px;
+    cursor:pointer;
+    color:var(--muted);
+}
+
+.modal .close:hover{
+    color:var(--text);
+}
+
+/* =========================
+   FORM STYLING
+========================= */
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:14px;
+}
+
+.form-grid .full{
+    grid-column:1 / -1;
+}
+
+.field label{
+    display:block;
+    margin-bottom:6px;
+    font-weight:600;
+    font-size:13px;
+    color:var(--text);
+}
+
+.field input,
+.field textarea,
+.field select{
+    width:100%;
+    padding:11px 12px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    font-size:14px;
+    outline:none;
+    transition:0.2s;
+    background:#fff;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.radio-row{
+    display:flex;
+    gap:18px;
+    align-items:center;
+}
+
+/* =========================
+   FORM ACTIONS
+========================= */
+.form-actions{
+    margin-top:16px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+/* =========================
+   SMALL UX IMPROVEMENTS
+========================= */
+h2{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:4px;
+}
+
+h3{
+    font-size:18px;
+    font-weight:600;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
